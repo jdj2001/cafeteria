@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="1000" pageHeight="792" columnWidth="960" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c9ff1e1d-a18e-4306-8130-7eaca34024ff">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="PARAMETRO" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     historialaccesos.`usuario` AS historialaccesos_usuario,
+     historialaccesos.`fecha` AS historialaccesos_fecha,
+     usuarios.`nombre` AS usuarios_nombre,
+     usuarios.`identidad` AS usuarios_identidad,
+     usuarios.`telefono` AS usuarios_telefono,
+     usuarios.`correo` AS usuarios_correo,
+     usuarios.`estatus` AS usuarios_estatus,
+     rol.`descripcion` AS rol_descripcion
+FROM
+     `usuarios` usuarios INNER JOIN `historialaccesos` historialaccesos ON usuarios.`id` = historialaccesos.`usuario`
+     INNER JOIN `rol` rol ON usuarios.`rol` = rol.`id`
+WHERE usuarios.`nombre` LIKE $P{PARAMETRO}
+OR usuarios.`correo` LIKE $P{PARAMETRO}
+OR historialaccesos.`usuario` LIKE $P{PARAMETRO}]]>
+	</queryString>
+	<field name="historialaccesos_usuario" class="java.lang.Integer"/>
+	<field name="historialaccesos_fecha" class="java.sql.Timestamp"/>
+	<field name="usuarios_nombre" class="java.lang.String"/>
+	<field name="usuarios_identidad" class="java.lang.String"/>
+	<field name="usuarios_telefono" class="java.lang.String"/>
+	<field name="usuarios_correo" class="java.lang.String"/>
+	<field name="usuarios_estatus" class="java.lang.String"/>
+	<field name="rol_descripcion" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="153" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="960" height="145" backcolor="#361500" uuid="7988dc6e-f4eb-4494-9c4f-54ef48f48e2a"/>
+			</rectangle>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="795" y="104" width="143" height="28" forecolor="#FFFBE9" backcolor="#361500" uuid="81f8ac6f-dfe7-43e9-a690-fec0c9eea7cb"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="0" y="0" width="163" height="145" uuid="bef53d8e-ef60-43a1-8e8b-9f79e25c6c8d"/>
+				<imageExpression><![CDATA["D:\\clases\\Program_Avanzada II\\CafeteriaGrupo#6_V1\\src\\imagenes\\logoSinFondo.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="241" y="38" width="517" height="55" forecolor="#FFFBE9" backcolor="#361500" uuid="1a7b54f4-3060-4085-aa03-24ffdee29ea6"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="28" isBold="true"/>
+				</textElement>
+				<text><![CDATA[HISTORIAL ACCESOS AL SISTEMA]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="21" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="120" height="20" forecolor="#FFFBE9" backcolor="#361500" uuid="d28a8c4c-3e7c-4b66-9d6d-a8b004f9b67c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CÓDIGO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="120" y="0" width="120" height="20" forecolor="#FFFBE9" backcolor="#361500" uuid="7118bf97-5907-4bb1-a75a-9868fdaf220e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NOMBRE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="240" y="0" width="120" height="20" forecolor="#FFFBE9" backcolor="#361500" uuid="2b818240-c342-4bff-b4a2-f516e158559c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ROL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="360" y="0" width="120" height="20" forecolor="#FFFBE9" backcolor="#361500" uuid="c9360b82-4a2e-4249-b3b1-84daa375b83b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[IDENTIDAD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="480" y="0" width="120" height="20" forecolor="#FFFBE9" backcolor="#361500" uuid="12292344-7247-4777-813a-398982e447a4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CORREO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="600" y="0" width="120" height="20" forecolor="#FFFBE9" backcolor="#361500" uuid="b8d17e0d-6572-4561-a9b9-15d3311200c7"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TELÉFONO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="720" y="0" width="120" height="20" forecolor="#FFFBE9" backcolor="#361500" uuid="efe058d5-4e7e-4585-9934-86b5b3bc242f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ESTATUS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="840" y="0" width="120" height="20" forecolor="#FFFBE9" backcolor="#361500" uuid="c48c989c-d370-45b3-846a-1562e1ee808a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FECHA ACCESO]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="23" splitType="Stretch">
+			<textField>
+				<reportElement mode="Opaque" x="0" y="0" width="120" height="20" forecolor="#361500" backcolor="#FFFBE9" uuid="faea038a-7ddb-4a99-b4f5-e792508d08c8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{historialaccesos_usuario}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="120" y="0" width="120" height="20" forecolor="#361500" backcolor="#FFFBE9" uuid="c0271ab8-1b6e-48d0-a5dc-43204f3eeb11"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{usuarios_nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="240" y="0" width="120" height="20" forecolor="#361500" backcolor="#FFFBE9" uuid="58ee9ea2-e93d-45b2-8419-0e0e2811683c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{rol_descripcion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="360" y="0" width="120" height="20" forecolor="#361500" backcolor="#FFFBE9" uuid="4de01877-68eb-40b7-b109-d5f405fd5cd7"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{usuarios_identidad}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="480" y="0" width="120" height="20" forecolor="#361500" backcolor="#FFFBE9" uuid="1c2b1c08-aed7-4da0-83f1-e1b4290237a2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{usuarios_correo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="600" y="0" width="120" height="20" forecolor="#361500" backcolor="#FFFBE9" uuid="e8abc841-6644-4e13-b25b-6b86aab12cd1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{usuarios_telefono}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="720" y="0" width="120" height="20" forecolor="#361500" backcolor="#FFFBE9" uuid="640ddd58-b623-4a17-b8d6-f018a19bf500"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{usuarios_estatus}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="840" y="0" width="120" height="23" forecolor="#361500" backcolor="#FFFBE9" uuid="c2d4acef-a344-4c27-accc-f5c3a29e8b1c"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{historialaccesos_fecha}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<textField>
+				<reportElement x="812" y="20" width="80" height="20" uuid="2150a14c-9a64-4421-8005-443ef4808c3f"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="892" y="20" width="40" height="20" uuid="b1b07a65-2dd7-4df2-a0cd-7eaefb73b4cd"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="1000" pageHeight="792" columnWidth="960" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="cd304d40-3c51-47e8-bdef-b1ce044c316a">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="PROVEEDOR" uuid="34ef98dc-fa38-47dc-83ab-b47795a82ca1">
+		<queryString>
+			<![CDATA[SELECT
+     proveedor.`id` AS proveedor_id,
+     proveedor.`descripcion` AS proveedor_descripcion,
+     proveedor.`ciudad` AS proveedor_ciudad,
+     proveedor.`telefono` AS proveedor_telefono,
+     proveedor.`estado` AS proveedor_estado,
+     producto.`descripcion` AS producto_descripcion,
+     categoria.`descripcion` AS categoria_descripcion
+FROM
+     `proveedor` proveedor INNER JOIN `producto` producto ON proveedor.`id` = producto.`idProveedor`
+     INNER JOIN `categoria` categoria ON producto.`idCategoria` = categoria.`id`]]>
+		</queryString>
+		<field name="proveedor_id" class="java.lang.Integer"/>
+		<field name="proveedor_descripcion" class="java.lang.String"/>
+		<field name="proveedor_ciudad" class="java.lang.String"/>
+		<field name="proveedor_telefono" class="java.lang.String"/>
+		<field name="proveedor_estado" class="java.lang.String"/>
+		<field name="producto_descripcion" class="java.lang.String"/>
+		<field name="categoria_descripcion" class="java.lang.String"/>
+	</subDataset>
+	<queryString>
+		<![CDATA[SELECT 1]]>
+	</queryString>
+	<field name="1" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="160" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="960" height="159" backcolor="#361500" uuid="a87987b2-fa7d-40ac-b855-0217a4811b7f"/>
+			</rectangle>
+			<image>
+				<reportElement x="0" y="0" width="184" height="159" uuid="cdf2e604-f2d3-450d-871d-5ff60589590e"/>
+				<imageExpression><![CDATA["D:\\clases\\Program_Avanzada II\\CafeteriaGrupo#6_V1\\src\\imagenes\\logoSinFondo.png"]]></imageExpression>
+			</image>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="802" y="116" width="143" height="28" forecolor="#FFFBE9" backcolor="#361500" uuid="05fa8f7d-9c89-47e0-8450-0c5de1888384"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="229" y="26" width="630" height="55" forecolor="#FFFBE9" backcolor="#361500" uuid="1085d827-cc28-4302-936a-197d2a9118c0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="28" isBold="true"/>
+				</textElement>
+				<text><![CDATA[REPORTE GENERAL PROVEEDORES]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="162" splitType="Stretch">
+			<componentElement>
+				<reportElement key="table 1" style="table 1" x="0" y="13" width="960" height="149" uuid="45bdca1c-82e5-4aa1-88a0-6dce5b8ebe2d"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="PROVEEDOR" uuid="eafc3acc-ed5c-4700-86f1-e2d0dff9b8b5">
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="90" uuid="2b28ae03-7558-4aa5-aadb-96967423a2fa">
+						<jr:columnHeader style="table 1_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement mode="Opaque" x="0" y="0" width="90" height="30" forecolor="#FFFBE9" backcolor="#361500" uuid="11fb97ba-50fb-46f0-9882-dd3f312b3d24"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="14" isBold="true"/>
+								</textElement>
+								<text><![CDATA[CÓDIGO]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table 1_TD" height="20" rowSpan="1">
+							<textField>
+								<reportElement mode="Opaque" x="0" y="0" width="90" height="20" forecolor="#361500" backcolor="#FFFBE9" uuid="218aba6d-a606-45e5-95f1-b0bfdd468d0e"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="14" isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{proveedor_id}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="139" uuid="f9ccb677-d8eb-4d21-99ee-0b6a6c3b8188">
+						<jr:columnHeader style="table 1_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement mode="Opaque" x="0" y="0" width="139" height="30" forecolor="#FFFBE9" backcolor="#361500" uuid="0d30ffcd-7250-47b0-a950-e522ca4231db"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="14" isBold="true"/>
+								</textElement>
+								<text><![CDATA[NOMBRE]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table 1_TD" height="20" rowSpan="1">
+							<textField>
+								<reportElement mode="Opaque" x="0" y="0" width="139" height="20" forecolor="#361500" backcolor="#FFFBE9" uuid="a4a535e2-1b35-4230-baa0-87a20fba667a"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="14" isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{proveedor_descripcion}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="139" uuid="040601f6-81e9-4c18-8fcf-772742276e3c">
+						<jr:columnHeader style="table 1_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement mode="Opaque" x="0" y="0" width="139" height="30" forecolor="#FFFBE9" backcolor="#361500" uuid="084c308d-35bb-4574-a7f4-cd90b8c7dcf5"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="14" isBold="true"/>
+								</textElement>
+								<text><![CDATA[CIUDAD]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table 1_TD" height="20" rowSpan="1">
+							<textField>
+								<reportElement mode="Opaque" x="0" y="0" width="139" height="20" forecolor="#361500" backcolor="#FFFBE9" uuid="119bc539-c3d1-41af-9012-df07dc3b9cc7"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="14" isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{proveedor_ciudad}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="127" uuid="cf85d342-c285-4d36-b19c-37137ccfcf24">
+						<jr:columnHeader style="table 1_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement mode="Opaque" x="0" y="0" width="127" height="30" forecolor="#FFFBE9" backcolor="#361500" uuid="ed45416a-0497-4df9-8534-d1e49c9c1986"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="14" isBold="true"/>
+								</textElement>
+								<text><![CDATA[TELÉFONO]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table 1_TD" height="20" rowSpan="1">
+							<textField>
+								<reportElement mode="Opaque" x="0" y="0" width="127" height="20" forecolor="#361500" backcolor="#FFFBE9" uuid="59a63632-14b8-4ffb-8cd4-e37e057cd15f"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="14" isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{proveedor_telefono}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="2ecbae29-02b9-445c-9129-4bc3347eb32c">
+						<jr:columnHeader style="table 1_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement mode="Opaque" x="0" y="0" width="90" height="30" forecolor="#FFFBE9" backcolor="#361500" uuid="60f0c85a-f692-4065-b389-f59d98272c29"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="14" isBold="true"/>
+								</textElement>
+								<text><![CDATA[ESTATUS]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table 1_TD" height="20" rowSpan="1">
+							<textField>
+								<reportElement mode="Opaque" x="0" y="0" width="90" height="20" forecolor="#361500" backcolor="#FFFBE9" uuid="9d121f66-f518-4332-b079-0a689f95a1a2"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="14" isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{proveedor_estado}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="183" uuid="14a92701-ea1a-49ef-b40c-dc60f884103b">
+						<jr:columnHeader style="table 1_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement mode="Opaque" x="0" y="0" width="183" height="30" forecolor="#FFFBE9" backcolor="#361500" uuid="9a223f07-386e-4007-8c02-7dc68c0ce004"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="14" isBold="true"/>
+								</textElement>
+								<text><![CDATA[PRODUCTO]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table 1_TD" height="20" rowSpan="1">
+							<textField>
+								<reportElement mode="Opaque" x="0" y="0" width="183" height="20" forecolor="#361500" backcolor="#FFFBE9" uuid="b84ad0e9-ebbc-4b40-a207-a22778786197"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="14" isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{producto_descripcion}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="190" uuid="7ba12969-f544-4328-ba1b-68716e5cc368">
+						<jr:columnHeader style="table 1_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement mode="Opaque" x="0" y="0" width="190" height="30" forecolor="#FFFBE9" backcolor="#361500" uuid="c2221bc6-b489-49a1-bf82-86b29e7cded8"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="14" isBold="true"/>
+								</textElement>
+								<text><![CDATA[CATEGORÍA PRODUCTO]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table 1_TD" height="20" rowSpan="1">
+							<textField>
+								<reportElement mode="Opaque" x="0" y="0" width="190" height="20" forecolor="#361500" backcolor="#FFFBE9" uuid="fa798807-456f-4e69-9868-3fb909377e8c"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="14" isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{categoria_descripcion}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+	</detail>
+</jasperReport>

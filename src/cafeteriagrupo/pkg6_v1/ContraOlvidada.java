@@ -1,0 +1,530 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package cafeteriagrupo.pkg6_v1;
+
+import accesoDatosObjetos.Conexion;
+import ayuda.AyudaContraOlvidada;
+import java.awt.Frame;
+import java.awt.Image;
+import java.awt.event.KeyEvent;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import javax.swing.ImageIcon;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.regex.Pattern;
+
+/**
+ *
+ * @author Juan Alvarado
+ */
+public class ContraOlvidada extends javax.swing.JFrame {
+    ImageIcon icono;
+    ImageIcon imagen;
+    String dbRespuesta;
+    String correo,nuevaContra;
+    private static String correoUsu;
+    //private String modeloCorreo="^[a-zA-Z0-9]+[@]+[a-zA-Z0-9]+[.]+[a-zA-Z0-9]+$";
+    String modeloCorreo = "^[a-zA-Z0-9]+([._]?[a-zA-Z0-9]+)*@[a-zA-Z0-9]+([.-]?[a-zA-Z0-9]+)*\\.[a-zA-Z]{2,}$";
+    String usuario, sentenciaSQL;
+    Connection con = null;
+    Conexion conecta;
+    PreparedStatement ps = null;
+    private JDialog RegistrarUsuarios;
+
+    /**
+     * Creates new form ContraOlvidada
+     */
+    public ContraOlvidada(String user) {
+        initComponents();
+        this.ConectarBD();
+        //Principal jFrame=new Principal();
+        jblUsuario.enable(false);
+        correoUsu=user;
+        jblUsuario.setText(correoUsu);
+        this.correoUsu = user;
+        jblUsuario.setText(usuario);
+        cambioImagen("iconos.png", jblFondo);
+        cambioImagen("logo.png", jblLogo);
+        btnActualizar.setEnabled(false);
+        btnBuscar.setEnabled(false);
+    }
+    
+    public void cambioImagen(String nombreImagen, JLabel img) {
+        imagen = new ImageIcon("src/imagenes/" + nombreImagen);
+        icono = new ImageIcon(imagen.getImage().getScaledInstance(img.getWidth(), img.getHeight(), Image.SCALE_DEFAULT));
+        //jlbImagen.setIcon(icono); SE OMITE PORQUE SE TIENEN DOS ETIQUETAS
+        img.setIcon(icono);
+    }
+
+    public void ConectarBD() {
+        conecta = new Conexion("cafeteria");
+        con = conecta.getConexion();//LLAMANDO CLASE CONEXION
+    }
+
+    public void limpiar() {
+        btnActualizar.setEnabled(false);
+        btnBuscar.setEnabled(false);
+        txtCorreo.setEditable(true);
+        txtCorreo.setText("");
+        txtPregunta.setText("");
+        txtRespuesta.setText("");
+        txtNuevaContraseña.setText("");
+    }
+
+    public void validarCorreo() {
+        correo = txtCorreo.getText();
+        if (correo.isEmpty() || !correo.matches(modeloCorreo)) {
+            btnBuscar.setEnabled(false);
+        } else {
+            btnBuscar.setEnabled(true);
+        }
+    }
+
+    public void validarCampos() {
+        nuevaContra = txtNuevaContraseña.getText();
+        String respuesta = txtRespuesta.getText();
+        String preguntaSeguridad = txtPregunta.getText();
+        if (!nuevaContra.equals("") && !respuesta.equals("") && !preguntaSeguridad.equals("")) {
+            btnActualizar.setEnabled(true);
+        } else {
+            btnActualizar.setEnabled(false);
+        }
+    }
+
+    public void traerPregunta() {
+        //correo = txtCorreo.getText();
+        String Csql = "SELECT preguntaSeguridad,respuesta FROM usuarios WHERE correo='" + correo + "'";
+        try {
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(Csql); //EJECUTA UNA CONSULTA
+
+            while (rs.next()) {
+                txtPregunta.setText(rs.getString("preguntaSeguridad"));
+                dbRespuesta = rs.getString("respuesta");
+            }//FIN DEL WHILE
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+
+    public void actualizarContrasenia() {
+        String query = "UPDATE usuarios SET contraseña = '"+nuevaContra+"' WHERE correo='" + correo + "'";
+        try {
+            Statement st = con.createStatement();
+            int rowsAffected = st.executeUpdate(query); // EJECUTA UNA CONSULTA DE ACTUALIZACIÓN
+
+            if (rowsAffected > 0) {
+                JOptionPane.showMessageDialog(null, "Contraseña actualizada correctamente", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "Error al actualizar la contraseña", "Mensaje", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+    
+    
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jPanel1 = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        txtPregunta = new javax.swing.JTextField();
+        txtRespuesta = new javax.swing.JTextField();
+        btnActualizar = new javax.swing.JButton();
+        btnLimpiar = new javax.swing.JButton();
+        btnBuscar = new javax.swing.JButton();
+        btnRegistrarse = new javax.swing.JButton();
+        btnIngresar = new javax.swing.JButton();
+        jblFondo = new javax.swing.JLabel();
+        jblLogo = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        txtCorreo = new javax.swing.JTextField();
+        jblUsuario = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        btnSalir = new javax.swing.JButton();
+        txtNuevaContraseña = new javax.swing.JPasswordField();
+        btnAyuda1 = new javax.swing.JButton();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jPanel1.setBackground(new java.awt.Color(141, 123, 104));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel2.setBackground(new java.awt.Color(241, 222, 201));
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(96, 54, 1));
+        jLabel1.setText("¿Olvidó su contraseña?");
+        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 110, -1, -1));
+
+        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel6.setText("Nueva Contraseña");
+        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 330, 157, -1));
+
+        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel7.setText("Pregunta de seguridad");
+        jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 250, -1, -1));
+
+        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel8.setText("Respuesta:");
+        jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 290, 157, -1));
+
+        txtPregunta.setEditable(false);
+        txtPregunta.setBackground(new java.awt.Color(241, 222, 201));
+        txtPregunta.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        txtPregunta.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtPreguntaKeyReleased(evt);
+            }
+        });
+        jPanel2.add(txtPregunta, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 250, 230, -1));
+
+        txtRespuesta.setBackground(new java.awt.Color(241, 222, 201));
+        txtRespuesta.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        txtRespuesta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtRespuestaActionPerformed(evt);
+            }
+        });
+        txtRespuesta.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtRespuestaKeyReleased(evt);
+            }
+        });
+        jPanel2.add(txtRespuesta, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 290, 230, -1));
+
+        btnActualizar.setBackground(new java.awt.Color(54, 21, 0));
+        btnActualizar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnActualizar.setForeground(new java.awt.Color(227, 202, 165));
+        btnActualizar.setText("Actualizar");
+        btnActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 390, -1, -1));
+
+        btnLimpiar.setBackground(new java.awt.Color(54, 21, 0));
+        btnLimpiar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnLimpiar.setForeground(new java.awt.Color(227, 202, 165));
+        btnLimpiar.setText("Limpiar");
+        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpiarActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnLimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 390, -1, -1));
+
+        btnBuscar.setBackground(new java.awt.Color(54, 21, 0));
+        btnBuscar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnBuscar.setForeground(new java.awt.Color(227, 202, 165));
+        btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/buscar.png"))); // NOI18N
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 200, 40, 40));
+
+        btnRegistrarse.setBackground(new java.awt.Color(54, 21, 0));
+        btnRegistrarse.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnRegistrarse.setForeground(new java.awt.Color(227, 202, 165));
+        btnRegistrarse.setText("Registrarse");
+        btnRegistrarse.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegistrarseActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnRegistrarse, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 430, 210, -1));
+
+        btnIngresar.setBackground(new java.awt.Color(54, 21, 0));
+        btnIngresar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnIngresar.setForeground(new java.awt.Color(227, 202, 165));
+        btnIngresar.setText("Ingresar");
+        btnIngresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIngresarActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnIngresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 430, 100, -1));
+
+        jblFondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/iconos.png"))); // NOI18N
+        jPanel2.add(jblFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 530, 900, 180));
+
+        jblLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/logo.png"))); // NOI18N
+        jPanel2.add(jblLogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 160, 170));
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel3.setText("Correo");
+        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 210, 157, 20));
+
+        txtCorreo.setBackground(new java.awt.Color(241, 222, 201));
+        txtCorreo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        txtCorreo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCorreoActionPerformed(evt);
+            }
+        });
+        txtCorreo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtCorreoKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCorreoKeyTyped(evt);
+            }
+        });
+        jPanel2.add(txtCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 210, 230, -1));
+
+        jblUsuario.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jblUsuario.setForeground(new java.awt.Color(96, 54, 1));
+        jPanel2.add(jblUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 490, 150, 30));
+
+        jLabel11.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(96, 54, 1));
+        jLabel11.setText("USUARIO:");
+        jPanel2.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 490, 90, 30));
+
+        btnSalir.setBackground(new java.awt.Color(54, 21, 0));
+        btnSalir.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnSalir.setForeground(new java.awt.Color(227, 202, 165));
+        btnSalir.setText("Salir");
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalirActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 390, 100, -1));
+
+        txtNuevaContraseña.setBackground(new java.awt.Color(241, 222, 201));
+        txtNuevaContraseña.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtNuevaContraseñaKeyReleased(evt);
+            }
+        });
+        jPanel2.add(txtNuevaContraseña, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 330, 230, -1));
+
+        btnAyuda1.setBackground(new java.awt.Color(54, 21, 0));
+        btnAyuda1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnAyuda1.setForeground(new java.awt.Color(227, 202, 165));
+        btnAyuda1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/cambiarPre.png"))); // NOI18N
+        btnAyuda1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAyuda1ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnAyuda1, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 0, 50, 50));
+
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 900, 710));
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 964, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 964, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 771, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 771, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+        );
+
+        pack();
+        setLocationRelativeTo(null);
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void txtPreguntaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPreguntaKeyReleased
+        this.validarCampos();
+    }//GEN-LAST:event_txtPreguntaKeyReleased
+
+    private void txtRespuestaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtRespuestaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtRespuestaActionPerformed
+
+    private void txtRespuestaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtRespuestaKeyReleased
+        this.validarCampos();
+    }//GEN-LAST:event_txtRespuestaKeyReleased
+
+    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
+
+        String respuesta = txtRespuesta.getText();
+        String nuevaContrasenia = txtNuevaContraseña.getText();
+        if (respuesta.equals(dbRespuesta)) {
+            this.actualizarContrasenia();
+            this.limpiar();
+        } else {
+            JOptionPane.showMessageDialog(null, "<html><b style=\"color:red\">Respuesta incorrecta</b></html>", "Message", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnActualizarActionPerformed
+
+    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
+        this.limpiar();
+    }//GEN-LAST:event_btnLimpiarActionPerformed
+
+    private void btnRegistrarseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarseActionPerformed
+        setVisible(false);
+        //new RegistrarUsuario().setVisible(true);
+        /*JDialog RegistrarUsuarios = new JDialog();
+        RegistrarUsuarios.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        RegistrarUsuarios.setVisible(true);*/
+        /*RegistrarUsuarios = new JDialog();
+        RegistrarUsuarios.setVisible(true);*/
+        
+        /*RegistrarUsuarios dialog = new RegistrarUsuarios(getOwner(), true, "Título del JDialog");
+        dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        dialog.setVisible(true);*/
+        JFrame owner = (JFrame) SwingUtilities.getWindowAncestor(this); // Obtiene el JFrame actual
+        setVisible(false);
+
+        RegistrarUsuarios dialog = new RegistrarUsuarios(owner, true, correoUsu);
+        dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        dialog.setVisible(true);
+        
+    }//GEN-LAST:event_btnRegistrarseActionPerformed
+
+    private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
+        setVisible(false);
+        new Login().setVisible(true);
+    }//GEN-LAST:event_btnIngresarActionPerformed
+
+    private void txtCorreoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCorreoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCorreoActionPerformed
+
+    private void txtCorreoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCorreoKeyReleased
+        this.validarCorreo();
+    }//GEN-LAST:event_txtCorreoKeyReleased
+
+    private void txtCorreoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCorreoKeyTyped
+        char c = evt.getKeyChar();
+
+        // Validar la longitud del texto actual en la caja de texto
+        if (txtCorreo.getText().length() == 50) {
+            evt.consume(); // Si se ha alcanzado el límite de caracteres, ignorar el carácter ingresado
+        } // Validar el carácter ingresado
+        else if (!(Character.isLetter(c) || c == KeyEvent.VK_SPACE || c == KeyEvent.VK_BACK_SPACE
+                || c == '@' || c == '.' || c == '_' || c == '-' || Character.isDigit(c))) {
+            evt.consume(); // Si el carácter no es válido, ignorarlo
+        } // Validar el formato del correo electrónico
+        else if (c == '@' && txtCorreo.getText().indexOf('@') != -1) {
+            evt.consume(); // Si ya hay un '@' presente, ignorar el carácter ingresado
+        } // Validar el dominio del correo electrónico
+        else if (c == '.' && txtCorreo.getText().endsWith(".")) {
+            evt.consume(); // Si el último carácter es un '.', ignorar el carácter ingresado
+        }
+    }//GEN-LAST:event_txtCorreoKeyTyped
+
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void txtNuevaContraseñaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNuevaContraseñaKeyReleased
+        this.validarCampos();
+    }//GEN-LAST:event_txtNuevaContraseñaKeyReleased
+
+    private void btnAyuda1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAyuda1ActionPerformed
+        // Suponiendo que estás llamando al segundo diálogo desde el primer diálogo
+        // Suponiendo que estás llamando al segundo diálogo desde la clase inventario
+        /*AyudaInventario dialog2 = new AyudaInventario((inventario) getOwner(), true);
+        dialog2.setVisible(true);*/
+        Frame ContraOlvidada = null;
+        AyudaContraOlvidada dialog2 = new AyudaContraOlvidada(ContraOlvidada, true);
+        dialog2.setVisible(true);
+    }//GEN-LAST:event_btnAyuda1ActionPerformed
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        this.traerPregunta();
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(ContraOlvidada.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(ContraOlvidada.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(ContraOlvidada.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(ContraOlvidada.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new ContraOlvidada(correoUsu).setVisible(true);
+            }
+        });
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnActualizar;
+    private javax.swing.JButton btnAyuda1;
+    private javax.swing.JButton btnBuscar;
+    private javax.swing.JButton btnIngresar;
+    private javax.swing.JButton btnLimpiar;
+    private javax.swing.JButton btnRegistrarse;
+    private javax.swing.JButton btnSalir;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JLabel jblFondo;
+    private javax.swing.JLabel jblLogo;
+    private javax.swing.JLabel jblUsuario;
+    private javax.swing.JTextField txtCorreo;
+    private javax.swing.JPasswordField txtNuevaContraseña;
+    private javax.swing.JTextField txtPregunta;
+    private javax.swing.JTextField txtRespuesta;
+    // End of variables declaration//GEN-END:variables
+}

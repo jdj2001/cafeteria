@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="700" pageHeight="792" columnWidth="660" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="99b09d4c-6cb1-413d-898b-bf1561b3aec4">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="28"/>
+	<parameter name="fechaIni" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="fechaFin" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     SUM(factura.`cantidad`) AS cantidad_total_vendida,
+     factura.`producto` AS factura_producto,
+     factura.`cantidad` AS factura_cantidad,
+     factura.`fecha` AS factura_fecha
+FROM
+     `factura` factura
+WHERE
+     factura.`fecha` BETWEEN $P{fechaIni} AND $P{fechaFin}
+GROUP BY
+     factura.`producto`]]>
+	</queryString>
+	<field name="cantidad_total_vendida" class="java.math.BigDecimal"/>
+	<field name="factura_producto" class="java.lang.String"/>
+	<field name="factura_cantidad" class="java.lang.Integer"/>
+	<field name="factura_fecha" class="java.sql.Date"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="146" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="660" height="145" backcolor="#361500" uuid="1648a828-988d-46dd-ab82-dcf74f1eb008"/>
+			</rectangle>
+			<image>
+				<reportElement x="0" y="0" width="163" height="145" uuid="c8fdc948-4488-486a-b6e4-0d583d1c6d73"/>
+				<imageExpression><![CDATA["D:\\clases\\Program_Avanzada II\\CafeteriaGrupo#6_V1\\src\\imagenes\\logoSinFondo.png"]]></imageExpression>
+			</image>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="491" y="103" width="143" height="28" forecolor="#FFFBE9" backcolor="#361500" uuid="8a948eb9-a1f5-48f9-ba14-33af1f0a8f16"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="205" y="31" width="354" height="54" forecolor="#FFFBE9" backcolor="#361500" uuid="cebc1208-815a-4e19-b391-230d413e118c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="24" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PRODUCTOS VENDIDOS ]]></text>
+			</staticText>
+		</band>
+	</title>
+	<summary>
+		<band height="391" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="660" height="391" backcolor="#361500" uuid="3b04d503-82fa-4647-9f22-76c327cc204a"/>
+			</rectangle>
+			<barChart>
+				<chart>
+					<reportElement mode="Opaque" x="12" y="53" width="635" height="330" forecolor="#361500" backcolor="#FFFBE9" uuid="5bcc9441-d6d8-455b-9a63-d7bb5584b25d"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<categoryDataset>
+					<categorySeries>
+						<seriesExpression><![CDATA[$F{factura_producto}]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{factura_fecha}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{cantidad_total_vendida}]]></valueExpression>
+					</categorySeries>
+				</categoryDataset>
+				<barPlot isShowLabels="true">
+					<plot/>
+					<itemLabel/>
+					<categoryAxisFormat>
+						<axisFormat/>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat/>
+					</valueAxisFormat>
+				</barPlot>
+			</barChart>
+			<textField>
+				<reportElement mode="Opaque" x="327" y="14" width="100" height="20" forecolor="#FFFBE9" backcolor="#361500" uuid="344cd750-88a6-45fe-bf2d-27b15242c2a7"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{fechaIni}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="476" y="14" width="100" height="20" forecolor="#FFFBE9" backcolor="#361500" uuid="2c198a37-f02a-4900-bb50-5ba1b8b29575"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{fechaFin}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="96" y="14" width="231" height="20" forecolor="#FFFBE9" backcolor="#361500" uuid="92929e4c-bd79-491e-b05f-5aec4895d323"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PRODUCTOS VENDIDOS DESDE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="427" y="14" width="49" height="20" forecolor="#FFFBE9" backcolor="#361500" uuid="edfab330-2843-4028-89cc-9b46e93917f0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[HASTA ]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>
